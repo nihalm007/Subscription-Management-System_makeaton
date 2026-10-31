@@ -1,0 +1,25 @@
+{
+  "name": "brightloop-subscription-system",
+  "version": "1.0.0",
+  "description": "Unified Subscription & Recurring Billing Management System for Brightloop Software (inspired by Odoo)",
+  "main": "server/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/index.js",
+    "seed": "node server/db/seed.js",
+    "build": "npm.cmd --prefix client run build",
+    "client": "npm.cmd --prefix client run dev",
+    "server": "node server/index.js",
+    "dev": "concurrently \"node server/index.js\" \"npm.cmd --prefix client run dev\""
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "concurrently": "^10.0.6",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.12.1"
+  }
+}
