@@ -3,43 +3,42 @@ import React from 'react';
 export default function StatusBadge({ status, isOverdue }) {
   if (isOverdue && status !== 'Paid' && status !== 'Cancelled') {
     return (
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 border border-rose-200">
-        <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5 animate-pulse"></span>
+      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-950/80 text-rose-300 border border-rose-800">
+        <span className="w-1.5 h-1.5 rounded-full bg-rose-400 mr-1.5 animate-pulse"></span>
         Overdue
       </span>
     );
   }
 
   const styles = {
-    Draft: 'bg-slate-100 text-slate-700 border-slate-200',
-    Quotation: 'bg-amber-50 text-amber-700 border-amber-200',
-    Confirmed: 'bg-blue-50 text-blue-700 border-blue-200',
-    Active: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    Paused: 'bg-purple-50 text-purple-700 border-purple-200',
-    Closed: 'bg-gray-100 text-gray-500 border-gray-200',
-    Paid: 'bg-teal-50 text-teal-700 border-teal-200',
-    Cancelled: 'bg-rose-50 text-rose-600 border-rose-200'
+    Draft: 'bg-[#181d28] text-slate-300 border-[#262e3e]',
+    Quotation: 'bg-amber-950/70 text-amber-300 border-amber-800',
+    Confirmed: 'bg-sky-950/70 text-sky-300 border-sky-800',
+    Active: 'bg-emerald-950/80 text-[#33ea6a] border-[#33ea6a]/40 shadow-[0_0_8px_rgba(51,234,106,0.15)]',
+    Paused: 'bg-purple-950/70 text-purple-300 border-purple-800',
+    Closed: 'bg-[#141720] text-slate-500 border-[#202532]',
+    Paid: 'bg-teal-950/70 text-teal-300 border-teal-800',
+    Cancelled: 'bg-rose-950/70 text-rose-300 border-rose-800'
   };
 
   const dotColors = {
     Draft: 'bg-slate-400',
-    Quotation: 'bg-amber-500',
-    Confirmed: 'bg-blue-500',
-    Active: 'bg-emerald-500',
-    Paused: 'bg-purple-500',
-    Closed: 'bg-gray-400',
-    Paid: 'bg-teal-500',
+    Quotation: 'bg-amber-400',
+    Confirmed: 'bg-sky-400',
+    Active: 'bg-[#33ea6a]',
+    Paused: 'bg-purple-400',
+    Closed: 'bg-slate-600',
+    Paid: 'bg-teal-400',
     Cancelled: 'bg-rose-400'
   };
 
-  const currentStyle = styles[status] || 'bg-slate-100 text-slate-700 border-slate-200';
+  const currentStyle = styles[status] || 'bg-[#181d28] text-slate-300 border-[#262e3e]';
   const dotColor = dotColors[status] || 'bg-slate-400';
 
   return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${currentStyle}`}>
+    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${currentStyle}`}>
       <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${dotColor}`}></span>
       {status}
     </span>
   );
 }
-

@@ -5,6 +5,9 @@ import Sidebar from './components/Sidebar';
 
 // Pages
 import Dashboard from './pages/Dashboard';
+import AnalyticsPage from './pages/AnalyticsPage';
+import CalendarPage from './pages/CalendarPage';
+import MessagesPage from './pages/MessagesPage';
 import Subscriptions from './pages/Subscriptions';
 import BillingDay from './pages/BillingDay';
 import Invoices from './pages/Invoices';
@@ -41,30 +44,47 @@ function MainApp() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">
+      <div className="min-h-screen bg-[#08090d] flex items-center justify-center text-white">
         <div className="text-center space-y-3">
-          <div className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-sm font-semibold tracking-wide">Starting Brightloop Subscriptions Engine...</p>
+          <div className="w-10 h-10 border-2 border-[#33ea6a] border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-xs font-semibold tracking-wide text-slate-400">Initializing CoinVex Engine...</p>
         </div>
       </div>
     );
   }
 
+  // Check if current tab is one of the 4 main pill tabs
+  const isMainPillTab = ['dashboard', 'analytics', 'calendar', 'messages'].includes(activeTab);
+
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#08090d] text-slate-100 flex flex-col font-sans selection:bg-[#33ea6a] selection:text-black">
       
-      {/* Top Navbar with 1-click Demo Role Switcher */}
+      {/* Top Navbar with CoinVex logo, pill navigation, and user menu */}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Main Layout */}
       <div className="flex flex-1">
-        {/* Sidebar */}
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+        {/* Render sidebar for management modules, or keep full-width for clean bento dashboard */}
+        {!isMainPillTab && role !== 'customer' && (
+          <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+        )}
 
         {/* Content Area */}
-        <main className="flex-1 overflow-x-hidden min-h-[calc(100vh-4rem)]">
+        <main className="flex-1 overflow-x-hidden min-h-[calc(100vh-4rem)] dark-theme-page">
           {activeTab === 'dashboard' && (
             <Dashboard setActiveTab={setActiveTab} onSelectInvoice={handleSelectInvoice} />
+          )}
+
+          {activeTab === 'analytics' && (
+            <AnalyticsPage />
+          )}
+
+          {activeTab === 'calendar' && (
+            <CalendarPage setActiveTab={setActiveTab} />
+          )}
+
+          {activeTab === 'messages' && (
+            <MessagesPage />
           )}
 
           {activeTab === 'subscriptions' && (

@@ -38,38 +38,38 @@ export default function PaymentModal({ invoice, onClose, onPaymentRecorded }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl max-w-md w-full overflow-hidden border border-slate-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-[#11141b] rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-[#212735] text-slate-200">
         
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div className="px-6 py-4 border-b border-[#1c212c] flex items-center justify-between bg-[#151922]">
           <div>
-            <h3 className="font-bold text-slate-900 text-base">Record Payment</h3>
-            <p className="text-xs text-slate-500">Invoice: {invoice.invoice_number}</p>
+            <h3 className="font-bold text-white text-base">Record Payment</h3>
+            <p className="text-xs text-slate-400">Invoice: <span className="font-mono text-[#33ea6a]">{invoice.invoice_number}</span></p>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-slate-600">
+          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-white">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs">
+            <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-300 text-xs">
               {error}
             </div>
           )}
 
           {/* Amount Due Card */}
-          <div className="p-3 bg-purple-50 rounded-xl border border-purple-100 flex items-center justify-between">
-            <span className="text-xs font-medium text-purple-900">Outstanding Balance:</span>
-            <span className="text-lg font-black font-mono text-purple-900">
+          <div className="p-3.5 bg-[#171b26] rounded-2xl border border-[#262f42] flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-300">Outstanding Balance:</span>
+            <span className="text-lg font-black font-mono text-[#33ea6a]">
               {formatINR(invoice.amount_due)}
             </span>
           </div>
 
           {/* Amount Input */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Payment Amount (₹)
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              Payment Amount
             </label>
             <div className="relative">
               <span className="absolute left-3 top-2.5 text-slate-400 text-sm font-semibold">₹</span>
@@ -81,86 +81,68 @@ export default function PaymentModal({ invoice, onClose, onPaymentRecorded }) {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 required
-                className="w-full pl-8 pr-3 py-2 border border-slate-300 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-purple-600 focus:outline-hidden"
+                className="w-full pl-8 pr-3 py-2 text-xs font-mono bg-[#161a24] border border-[#262e3e] rounded-xl text-white focus:outline-hidden focus:border-[#33ea6a]"
               />
             </div>
-            {amount < invoice.amount_due && (
-              <p className="text-[11px] text-amber-600 mt-1">
-                Partial payment: {formatINR(invoice.amount_due - amount)} will remain due.
-              </p>
-            )}
           </div>
 
-          {/* Method */}
+          {/* Payment Method */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
               Payment Method
             </label>
-            <select
-              value={method}
-              onChange={(e) => setMethod(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-hidden"
-            >
-              <option value="Credit Card">Credit Card</option>
-              <option value="Bank Transfer">Bank Transfer (ACH / Wire)</option>
-              <option value="Stripe">Stripe Checkout</option>
-              <option value="UPI">UPI</option>
-              <option value="Check">Check</option>
-              <option value="Cash">Cash</option>
-            </select>
+            <div className="grid grid-cols-3 gap-2">
+              {['Credit Card', 'Bank Transfer', 'Manual UPI'].map((m) => (
+                <button
+                  type="button"
+                  key={m}
+                  onClick={() => setMethod(m)}
+                  className={`py-2 px-2 rounded-xl text-[11px] font-semibold border text-center transition-all ${
+                    method === m
+                      ? 'border-[#33ea6a] bg-[#33ea6a]/15 text-[#33ea6a]'
+                      : 'border-[#262e3e] bg-[#161a24] text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Reference */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Transaction / Reference Number
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              Transaction / Gate Reference
             </label>
             <input
               type="text"
               value={reference}
               onChange={(e) => setReference(e.target.value)}
-              required
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-hidden"
+              className="w-full px-3 py-2 text-xs font-mono bg-[#161a24] border border-[#262e3e] rounded-xl text-white focus:outline-hidden focus:border-[#33ea6a]"
             />
           </div>
 
-          {/* Notes */}
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Notes (Optional)
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Paid via portal or check number #4820"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-hidden"
-            />
-          </div>
-
-          {/* Submit */}
-          <div className="pt-2 flex justify-end gap-2">
+          {/* Actions */}
+          <div className="pt-3 border-t border-[#1c212c] flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition"
+              className="px-4 py-2 rounded-xl bg-[#161a24] text-slate-300 hover:text-white text-xs font-semibold transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-5 py-2 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 transition flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+              className="px-5 py-2 rounded-full bg-[#33ea6a] hover:bg-[#2fe064] text-black text-xs font-bold transition flex items-center gap-1.5 shadow-sm disabled:opacity-50"
             >
-              <Check className="w-4 h-4" />
+              <Check className="w-3.5 h-3.5 stroke-[2.5]" />
               {loading ? 'Recording...' : 'Confirm Payment'}
             </button>
           </div>
-
         </form>
 
       </div>
     </div>
   );
 }
-

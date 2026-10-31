@@ -1,13 +1,151 @@
 @import "tailwindcss";
 
 @layer base {
+  :root {
+    --bg-dark: #08090d;
+    --card-dark: #11141a;
+    --card-border: #1c212c;
+    --neon-green: #33ea6a;
+    --neon-green-glow: rgba(51, 234, 106, 0.25);
+    --neon-purple: #8a3ffc;
+    --neon-blue: #0070f3;
+  }
+
   body {
-    @apply bg-slate-50 text-slate-900 antialiased font-sans;
+    background-color: #08090d;
+    color: #f1f5f9;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    antialiased: true;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 }
 
-/* Custom scrollbars & printing rules */
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0d0f15;
+}
+::-webkit-scrollbar-thumb {
+  background: #232936;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #39e75f;
+}
+
+/* Custom animations & glow */
+.glow-green {
+  box-shadow: 0 0 25px -4px rgba(51, 234, 106, 0.4);
+}
+
+.glow-purple {
+  box-shadow: 0 0 25px -4px rgba(138, 63, 252, 0.4);
+}
+
+.glow-pill {
+  box-shadow: 0 0 12px 0 rgba(51, 234, 106, 0.35);
+}
+
+/* Striped pending bar background */
+.striped-pending-bar {
+  background-color: #232733;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #232733,
+    #232733 6px,
+    #181b24 6px,
+    #181b24 12px
+  );
+}
+
+/* Radar concentric background circles */
+.radar-bg {
+  background-image: radial-gradient(circle at 18% 18%, rgba(51, 234, 106, 0.08) 0%, transparent 45%),
+                    radial-gradient(circle at 80% 25%, rgba(138, 63, 252, 0.06) 0%, transparent 40%);
+}
+
+/* Dark Neo-Fintech Theme Overrides for all sub-views */
+.dark-theme-page {
+  color: #f1f5f9;
+}
+.dark-theme-page .bg-white {
+  background-color: #11141b !important;
+  color: #f1f5f9 !important;
+  border-color: #1d222e !important;
+}
+.dark-theme-page .bg-slate-50,
+.dark-theme-page .bg-slate-50\/70,
+.dark-theme-page .bg-slate-100 {
+  background-color: #141822 !important;
+  border-color: #1f2533 !important;
+}
+.dark-theme-page .border-slate-200,
+.dark-theme-page .border-slate-100,
+.dark-theme-page .border-slate-300 {
+  border-color: #1d222e !important;
+}
+.dark-theme-page .text-slate-900,
+.dark-theme-page .text-slate-800 {
+  color: #ffffff !important;
+}
+.dark-theme-page .text-slate-700,
+.dark-theme-page .text-slate-600 {
+  color: #cbd5e1 !important;
+}
+.dark-theme-page .text-slate-500,
+.dark-theme-page .text-slate-400 {
+  color: #94a3b8 !important;
+}
+.dark-theme-page input,
+.dark-theme-page select,
+.dark-theme-page textarea {
+  background-color: #161a24 !important;
+  border-color: #262e3e !important;
+  color: #ffffff !important;
+}
+.dark-theme-page input:focus,
+.dark-theme-page select:focus,
+.dark-theme-page textarea:focus {
+  border-color: #33ea6a !important;
+  outline: none !important;
+}
+.dark-theme-page .hover\:bg-slate-50:hover,
+.dark-theme-page .hover\:bg-slate-50\/70:hover,
+.dark-theme-page .hover\:bg-slate-100:hover,
+.dark-theme-page .hover\:bg-slate-200:hover {
+  background-color: #191f2c !important;
+}
+.dark-theme-page .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+.dark-theme-page .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #1d222e !important;
+}
+.dark-theme-page .bg-purple-700,
+.dark-theme-page .bg-purple-800 {
+  background-color: #33ea6a !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+.dark-theme-page .bg-purple-700:hover,
+.dark-theme-page .bg-purple-800:hover {
+  background-color: #2fe064 !important;
+}
+.dark-theme-page .text-purple-700,
+.dark-theme-page .text-purple-800,
+.dark-theme-page .text-purple-600 {
+  color: #33ea6a !important;
+}
+.dark-theme-page .bg-purple-50,
+.dark-theme-page .bg-purple-100 {
+  background-color: rgba(51, 234, 106, 0.1) !important;
+  border-color: rgba(51, 234, 106, 0.25) !important;
+  color: #33ea6a !important;
+}
+
+/* Print styles */
 @media print {
   body * {
     visibility: hidden;
@@ -22,6 +160,7 @@
     width: 100%;
     margin: 0;
     padding: 20px;
-    background: white;
+    background: white !important;
+    color: black !important;
   }
 }
